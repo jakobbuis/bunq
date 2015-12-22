@@ -1,0 +1,15 @@
+#chat {
+    border: 1px solid #ddd;
+    width: 30em;
+    min-height: 10em;
+}
+
+label {
+    display: inline-block;
+    width: 6em;
+    cursor: pointer;
+}
+
+input {
+    width: 20em;
+}
