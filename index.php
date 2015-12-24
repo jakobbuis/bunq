@@ -9,8 +9,13 @@ require 'vendor/autoload.php';
 $app = new App;
 
 /*
- * Define endpoints
+ * Define server API endpoints
  */
+
+// Main UI
+$app->get('/', function(Request $request, Response $response){
+    return readfile('interface.html');
+});
 
 // Update chat endpoint for polling
 // returns all messages after a specific timestamp
