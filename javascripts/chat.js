@@ -50,8 +50,43 @@ var App = {
      * @return {undefined}
      */
     poll: function() {
+        var request = new XMLHttpRequest();
+        request.open('GET', '/chat', true);
 
+        request.onload = function(){
+            if (request.status >= 200 && request.status < 400) {
+                App.renderNewMessages(JSON.parse(request.responseText));
+            }
+            else {
+                App.fatalError();
+            }
+        };
+        request.onerror = App.fatalError;
+
+        request.send();
     },
+
+    /**
+     * Notify the user a fatal error has occured
+     * @return {undefined}
+     */
+    fatalError: function() {
+        alert('A unknown fatal error happened. Reload and try again, or contact support');
+    },
+
+    /**
+     * Renders new messages in the UI
+     * @param  {Array} messages
+     * @return {undefined}
+     */
+    renderNewMessages: function(messages) {
+        var chat = document.querySelector('#chat');
+        for (var i = 0; i <= messages.length; i++) {
+            var line = document.createElement('li');
+            line.innerHTML = '<strong>' + messages[i].name + ':</strong> ' + messages[i].message;
+            chat.appendChild(line);
+        }
+    }
 };
 
 // Run app on page load

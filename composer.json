@@ -1,6 +1,7 @@
 {
     "require": {
         "slim/slim": "^3.0",
-        "doctrine/migrations": "^1.2"
+        "doctrine/migrations": "^1.2",
+        "catfan/medoo": "^1.0"
     }
 }
