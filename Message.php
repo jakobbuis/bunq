@@ -27,12 +27,14 @@ class Message
     }
 
     /**
-     * Find all messages ever, ordered by timing
+     * Find all messages after a specific timestamp
+     * @param  integer $timestamp
      * @return array
      */
-    public function getAll()
+    public function getAfter($timestamp)
     {
-        return $this->database->select($this->tablename, ['name', 'message', 'created_at']);
+        return $this->database->select($this->tablename, ['name', 'message', 'created_at'],
+                    ['ORDER' => 'created_at ASC', 'created_at[>]' => $timestamp]);
     }
 
     /**

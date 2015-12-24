@@ -46,17 +46,31 @@ var App = {
     },
 
     /**
+     * Returns the timestamp of the last message we have locally
+     * to use for polling
+     * @return {integer} last timestamp, or 0 if no messages are known
+     */
+    lastMessageTimestamp: function() {
+        var messages = document.querySelectorAll('#chat li');
+        if (messages.length === 0) {
+            return 0;
+        }
+        return messages[messages.length - 1].getAttribute('data-timestamp');
+    },
+
+    /**
      * Poll for updates to chat
      * @return {undefined}
      */
     poll: function() {
+        // Poll for changes
         var request = new XMLHttpRequest();
-        request.open('GET', '/chat', true);
+        request.open('GET', '/chat/'+String(App.lastMessageTimestamp()), true);
 
         request.onload = function(){
             if (request.status >= 200 && request.status < 400) {
                 App.renderNewMessages(JSON.parse(request.responseText));
-                setTimeout(App.poll, 1000);
+                setTimeout(App.poll, 3000);
             }
             else {
                 App.fatalError();
@@ -85,6 +99,7 @@ var App = {
         for (var i = 0; i < messages.length; i++) {
             var line = document.createElement('li');
             line.innerHTML = '<strong>' + messages[i].name + ':</strong> ' + messages[i].message;
+            line.setAttribute('data-timestamp', messages[i].created_at);
             chat.appendChild(line);
         }
     }

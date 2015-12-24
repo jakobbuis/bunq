@@ -25,9 +25,10 @@ $app->get('/', function(Request $request, Response $response){
 
 // Update chat endpoint for polling
 // returns all messages after a specific timestamp
-$app->get('/chat', function(Request $request, Response $response) use ($message) {
+$app->get('/chat/{timestamp:\d+}', function(Request $request, Response $response, $args) use ($message) {
+    $messages = $message->getAfter((int) $args['timestamp']);
     $response = $response->withHeader('Content-Type', 'application/json');
-    return $response->getBody()->write(json_encode($message->getAll()));
+    return $response->getBody()->write(json_encode($messages));
 });
 
 // Main chat function: emit a message to the global chat
