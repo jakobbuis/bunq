@@ -82,7 +82,7 @@ var App = {
      */
     renderNewMessages: function(messages) {
         var chat = document.querySelector('#chat');
-        for (var i = 0; i <= messages.length; i++) {
+        for (var i = 0; i < messages.length; i++) {
             var line = document.createElement('li');
             line.innerHTML = '<strong>' + messages[i].name + ':</strong> ' + messages[i].message;
             chat.appendChild(line);
