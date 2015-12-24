@@ -56,6 +56,7 @@ var App = {
         request.onload = function(){
             if (request.status >= 200 && request.status < 400) {
                 App.renderNewMessages(JSON.parse(request.responseText));
+                setTimeout(App.poll, 1000);
             }
             else {
                 App.fatalError();
